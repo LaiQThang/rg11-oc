@@ -1,5 +1,9 @@
+import classNames from 'classnames/bind';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '~/components/Auth';
+import styles from './Home.module.scss';
+
+const cx = classNames.bind(styles);
 
 function Home() {
     const auth = useAuth();
@@ -9,10 +13,12 @@ function Home() {
         auth.logout();
         navigate('/login');
     };
-    console.log(auth.data);
+    const data = JSON?.parse(localStorage?.getItem('data'));
+
+    console.log(data);
     return (
-        <div>
-            welcome to RG11
+        <div className={cx('wrapper')}>
+            welcome to {data[0].username}
             <button onClick={handleLogout}> Logout</button>
         </div>
     );

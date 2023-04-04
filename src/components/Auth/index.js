@@ -12,7 +12,8 @@ function AuthProvider({ children }) {
         setPassword(password);
         setData(data);
         setToken(data[0].token);
-        // localStorage.setItem('username', JSON.stringify(user));
+        localStorage.setItem('username', JSON.stringify(user));
+        localStorage.setItem('data', JSON.stringify(data));
         // localStorage.setItem('pass', JSON.stringify(password));
     };
     const logout = () => {

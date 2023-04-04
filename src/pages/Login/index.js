@@ -1,6 +1,12 @@
+import classNames from 'classnames/bind';
 import { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
+
 import { useAuth } from '~/components/Auth';
+import styles from './Login.module.scss';
+import images from '~/assets/images';
+
+const cx = classNames.bind(styles);
 
 function Login() {
     const [user, setUser] = useState('');
@@ -15,7 +21,6 @@ function Login() {
     localStorage.clear();
 
     const handleLogin = () => {
-        // fetch(`https://jsonplaceholder.typicode.com/users?username=${user}`);
         fetch(`http://localhost:5000/users?username=${user}`)
             .then((response) => response.json())
             .then((data) => {
@@ -27,55 +32,30 @@ function Login() {
                     navigate(redirectPath, { replace: true });
                 }
             });
-
-        // async function loginUser(credentials) {
-        //     return fetch('http://localhost:5000/api/token', {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //         },
-        //         body: JSON.stringify(credentials),
-        //     }).then((data) => data.json());
-        // }
-
-        // const token = loginUser({
-        //     user,
-        //     password,
-        // });
-
-        // token.then(function (result) {
-        //     console.log(result); // "Some User token"
-        // });
-        // const data = { username: user, password: password, full_name: 'Thang' };
-
-        // fetch('http://localhost:5000/api/user', {
-        //     method: 'PUT', // or 'PUT'
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify(data),
-        // })
-        //     .then((response) => response.json())
-        //     .then((data) => {
-        //         console.log('Success:', data);
-        //     })
-        //     .catch((error) => {
-        //         console.error('Error:', error);
-        //     });
     };
     return (
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <label>
-                username: <input type="text" onChange={(e) => setUser(e.target.value)} placeholder="Enter username" />
-            </label>
+        <div className={cx('wrapper')} style={{ background: `url(${images.background})` }}>
+            <div className={cx('login')}>
+                <img src={images.logo} alt="logo" className={cx('logo')} />
+                <h2 className={cx('title')}>Central Authentication Service</h2>
+                <div className={cx('body-login')}>
+                    <label className={cx('label')}>Tên đăng nhập:</label>
+                    <input className={cx('input')} type="text" onChange={(e) => setUser(e.target.value)} />
 
-            <label>
-                password:
-                <input type="text" onChange={(e) => setPassword(e.target.value)} placeholder="Enter password" />
-            </label>
-            <button onClick={handleLogin} style={{ width: '80px' }}>
-                Login
-            </button>
+                    <label className={cx('label')}>Mật khẩu:</label>
+                    <input className={cx('input')} type="password" onChange={(e) => setPassword(e.target.value)} />
+                    <button className={cx('btn')} onClick={handleLogin}>
+                        Đăng nhập
+                    </button>
+                </div>
+
+                <p className={cx('footer')}>
+                    Bạn chưa có tài khoản?
+                    <Link to="/register" className={cx('register')}>
+                        Đăng ký
+                    </Link>
+                </p>
+            </div>
         </div>
     );
 }
