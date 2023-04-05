@@ -1,0 +1,48 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 80vh;
+    align-items: center;
+}
+
+.side-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.bullhorn,
+.creat-room,
+.action {
+    width: 78px;
+    height: 78px;
+    font-size: 2.2rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #404040;
+    margin: 8px 0;
+}
+.creat-room {
+    width: 44px;
+    height: 44px;
+    background-color: #1473e6;
+    border-color: #1473e6;
+    color: var(--white);
+    border-radius: 50%;
+}
+
+.bullhorn {
+    width: 48px;
+    height: 48px;
+    background-color: hsla(0, 0%, 94%, 0.8);
+    border-radius: 50%;
+}
+
+.title {
+    font-size: 1.6rem;
+}

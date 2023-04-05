@@ -6,16 +6,24 @@ import Home from '~/pages/Home';
 import Login from '~/pages/Login';
 import Register from '~/pages/Register';
 import Source from '~/pages/Source';
-import Upload from '~/pages/Upload';
+import Calendar from '~/pages/Calendar';
+import NewFeed from '~/pages/NewFeed';
+import Profile from '~/pages/Profile';
+import Settings from '~/pages/Settings';
 
 //public route
 const publicRoutes = [
     { path: '/', component: Home, auth: RequireAuth },
     { path: '/source', component: Source, auth: RequireAuth },
-    { path: '/upload', component: Upload, layout: HeaderOnly, auth: RequireAuth },
+    { path: '/calendar', component: Calendar, auth: RequireAuth },
+    { path: '/profile', component: Profile, layout: HeaderOnly, auth: RequireAuth },
+    { path: '/settings', component: Settings, layout: HeaderOnly, auth: RequireAuth },
+    { path: '/newfeed', component: NewFeed, auth: RequireAuth },
     { path: '/login', component: Login, layout: null, auth: null },
     { path: '/register', component: Register, layout: null, auth: null },
 ];
+
+// { path: '/calendar', component: Calendar, layout: HeaderOnly, auth: RequireAuth },
 
 const privateRoutes = [];
 
