@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { faBell } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -15,6 +15,11 @@ function Header() {
                 <div className={cx('logo')}>
                     <Link to="/">RG11-OC </Link>
                     <span>Lớp học trực tuyến</span>
+                </div>
+
+                <div className={cx('search')}>
+                    <FontAwesomeIcon icon={faSearch} className={cx('icon-search')} />
+                    <input className={cx('input-search')} type="text" placeholder="Tìm kiểm khóa học..." />
                 </div>
 
                 <div className={cx('actions')}>

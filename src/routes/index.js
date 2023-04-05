@@ -10,11 +10,13 @@ import Calendar from '~/pages/Calendar';
 import NewFeed from '~/pages/NewFeed';
 import Profile from '~/pages/Profile';
 import Settings from '~/pages/Settings';
+import Room from '~/pages/Room';
 
 //public route
 const publicRoutes = [
     { path: '/', component: Home, auth: RequireAuth },
     { path: '/source', component: Source, auth: RequireAuth },
+    { path: '/source/room', component: Room, auth: RequireAuth },
     { path: '/calendar', component: Calendar, auth: RequireAuth },
     { path: '/profile', component: Profile, layout: HeaderOnly, auth: RequireAuth },
     { path: '/settings', component: Settings, layout: HeaderOnly, auth: RequireAuth },
