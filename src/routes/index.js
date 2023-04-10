@@ -11,6 +11,7 @@ import NewFeed from '~/pages/NewFeed';
 import Profile from '~/pages/Profile';
 import Settings from '~/pages/Settings';
 import Room from '~/pages/Room';
+import Class from '~/pages/Class';
 
 //public route
 const publicRoutes = [
@@ -20,6 +21,7 @@ const publicRoutes = [
     { path: '/calendar', component: Calendar, auth: RequireAuth },
     { path: '/profile', component: Profile, layout: HeaderOnly, auth: RequireAuth },
     { path: '/settings', component: Settings, layout: HeaderOnly, auth: RequireAuth },
+    { path: '/source/room/:roomID', component: Class, layout: HeaderOnly, auth: RequireAuth },
     { path: '/newfeed', component: NewFeed, auth: RequireAuth },
     { path: '/login', component: Login, layout: null, auth: null },
     { path: '/register', component: Register, layout: null, auth: null },

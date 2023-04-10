@@ -1,14 +1,42 @@
 import classNames from 'classnames/bind';
 
 import styles from './Room.module.scss';
-import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { useSocket } from '~/providers/Socket';
+import { useCallback, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
 function Room() {
-    const student = false;
+    const student = true;
+
+    const { socket } = useSocket();
+
+    const navigate = useNavigate();
+
+    const data = JSON?.parse(localStorage?.getItem('data'));
+
+    const handleRoomJoined = useCallback(
+        ({ roomID }) => {
+            // console.log('Room Joined', roomID);
+            navigate(`/source/room/${roomID}`);
+        },
+        [navigate],
+    );
+
+    useEffect(() => {
+        socket.on('joined-room', handleRoomJoined);
+
+        return () => {
+            socket.off('joined-room', handleRoomJoined);
+        };
+    }, [handleRoomJoined, socket]);
+
+    const handleJoinRoom = () => {
+        socket.emit('join-room', { roomID: '1', emailID: data[0].username });
+    };
 
     return (
         <div className={cx('wrapper')}>
@@ -64,7 +92,9 @@ function Room() {
                 </div>
             </div>
             <div className={cx('function')}>
-                <Link className={cx('function-btn')}>VÀO LỚP HỌC</Link>
+                <button onClick={handleJoinRoom} className={cx('function-btn')}>
+                    VÀO LỚP HỌC
+                </button>
                 {student ? (
                     <button className={cx('function-btn')}>NỘP BÀI</button>
                 ) : (

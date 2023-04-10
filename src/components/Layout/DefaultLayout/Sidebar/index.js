@@ -1,8 +1,10 @@
 import classNames from 'classnames/bind';
+
 import styles from './Sidebar.module.scss';
 import { Link, NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBullhorn, faCalendar, faHome, faPlus, faRestroom } from '@fortawesome/free-solid-svg-icons';
+import Modal from '~/components/Modal';
 
 const cx = classNames.bind(styles);
 
@@ -10,9 +12,15 @@ function Sidebar() {
     return (
         <div className={cx('wrapper')}>
             <div className={cx('side-bar')}>
-                <Link className={cx('create-room')} to="/create-room">
+                <button
+                    className={cx('create-room', { class: true })}
+                    type="button"
+                    data-bs-toggle="modal"
+                    data-bs-target="#myModal"
+                >
                     <FontAwesomeIcon icon={faPlus} />
-                </Link>
+                </button>
+                <Modal />
                 <NavLink className={(nav) => cx('action', { active: nav.isActive })} to="/">
                     <FontAwesomeIcon icon={faHome} />
                     <span className={cx('title')}>Home</span>
