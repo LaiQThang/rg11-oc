@@ -11,6 +11,11 @@ function Source() {
             <span className={cx('title')}>Khóa học của bạn</span>
             <div className={cx('content')}>
                 <Course />
+                <Course />
+                <Course />
+                <Course />
+                <Course />
+                <Course />
             </div>
         </div>
     );

@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 const cx = classNames.bind(styles);
 
 function Room() {
-    const student = true;
+    const student = false;
 
     const { socket } = useSocket();
 

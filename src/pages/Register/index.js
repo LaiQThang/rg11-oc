@@ -27,6 +27,8 @@ function Register() {
 
                     <label className={cx('label')}>Mật khẩu:</label>
                     <input className={cx('input')} type="password" {...register('password')} />
+                    <label className={cx('label')}>Nhập lại mật khẩu:</label>
+                    <input className={cx('input')} type="password" {...register('rePassword')} />
                     <input type="submit" value="Đăng ký" className={cx('btn')} />
                     {errors.exampleRequired && <span>This field is required</span>}
 

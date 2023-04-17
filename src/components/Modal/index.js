@@ -13,7 +13,26 @@ function Modal() {
 
                     <div className="modal-body">
                         <div className="input-group mb-3">
-                            <input type="text" className="form-control" placeholder="Username" aria-label="Username" />
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Tên lớp học"
+                                aria-label="Username"
+                            />
+                        </div>
+                        <div className="input-group mb-3">
+                            <input type="text" className="form-control" placeholder="Môn học" aria-label="Username" />
+                        </div>
+                        <div className="input-group mb-3">
+                            <input type="text" className="form-control" placeholder="Mô tả" aria-label="Username" />
+                        </div>
+                        <div className="input-group mb-3">
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder="Số lượng sinh viên"
+                                aria-label="Username"
+                            />
                         </div>
                     </div>
 
