@@ -17,11 +17,11 @@ import Class from '~/pages/Class';
 const publicRoutes = [
     { path: '/', component: Home, auth: RequireAuth },
     { path: '/source', component: Source, auth: RequireAuth },
-    { path: '/source/room', component: Room, auth: RequireAuth },
+    { path: '/source/room/:roomName', component: Room, auth: RequireAuth },
     { path: '/calendar', component: Calendar, auth: RequireAuth },
     { path: '/profile', component: Profile, layout: HeaderOnly, auth: RequireAuth },
     { path: '/settings', component: Settings, layout: HeaderOnly, auth: RequireAuth },
-    { path: '/source/room/:roomID', component: Class, layout: HeaderOnly, auth: RequireAuth },
+    { path: '/source/room/class/:roomID', component: Class, layout: HeaderOnly, auth: RequireAuth },
     { path: '/newfeed', component: NewFeed, auth: RequireAuth },
     { path: '/login', component: Login, layout: null, auth: null },
     { path: '/register', component: Register, layout: null, auth: null },

@@ -5,19 +5,22 @@ import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
-function Course() {
+function Course({ data }, props) {
     return (
         <div className={cx('course')}>
-            <div
-                className={cx('course-bgr')}
-                style={{ backgroundImage: 'url(https://files.fullstack.edu.vn/f8-prod/courses/3.png)' }}
-            >
-                <Link to="/source/room" className={cx('course-view')}>
+            <div className={cx('course-bgr')} style={{ backgroundImage: `url(${data.room_img})` }}>
+                <Link
+                    to={{
+                        pathname: `/source/room/${data.room_id}`,
+                        state: '1323',
+                    }}
+                    className={cx('course-view')}
+                >
                     Xem khóa học
                 </Link>
             </div>
 
-            <span className={cx('course-name')}>Lập trình web</span>
+            <span className={cx('course-name')}>{data.course_name}</span>
         </div>
     );
 }

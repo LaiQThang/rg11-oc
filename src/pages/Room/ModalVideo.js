@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-function Modal() {
+function ModalVideo({ path }) {
     const [detail, setDetail] = useState({});
     const {
         register,
@@ -9,11 +9,9 @@ function Modal() {
         formState: { errors },
     } = useForm();
 
-    const user = JSON.parse(localStorage.getItem('data'));
-
     useEffect(() => {
         const fetchAPI = async () => {
-            const result = await fetch(`http://localhost:5000/users?${user[0].id}`)
+            const result = await fetch(`http://localhost:5000/courses?room_id=${path}`)
                 .then((response) => response.json())
                 .then((data) => {
                     return data[0];
@@ -25,28 +23,10 @@ function Modal() {
         fetchAPI();
     }, []);
 
-    console.log(detail);
-
     async function putJSON(data) {
         try {
-            const response = await fetch(`http://localhost:5000/users/${user[0].id}`, {
+            const response = await fetch(`http://localhost:5000/courses/${detail.id}`, {
                 method: 'PUT', // or 'PUT'
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            });
-
-            const result = await response.json();
-        } catch (error) {
-            alert(error);
-        }
-    }
-
-    async function postJSON(data) {
-        try {
-            const response = await fetch(`http://localhost:5000/courses`, {
-                method: 'POST', // or 'PUT'
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -61,34 +41,27 @@ function Modal() {
 
     const onSubmit = (data) => {
         try {
-            const obj = {
-                room_id: Math.random(),
-                room_img: 'https://files.fullstack.edu.vn/f8-staging/blog_posts/4049/63da2769b2798.png',
-                file: [{ name: '' }],
-                video: [{ name: '' }],
-            };
             const dataDetail = {
-                username: detail.username,
-                password: detail.password,
-                full_name: detail.full_name,
-                token: detail.token,
-                power: detail.power,
-                class: [...detail.class, { ...data, ...obj }],
+                room_id: path,
+                room_img: detail.room_img,
+                course_name: detail.course_name,
+                discription: detail.discription,
+                file: detail.file,
+                video: [...detail.video, { name: data.video_name }],
             };
             putJSON(dataDetail);
-            postJSON({ ...data, ...obj });
 
-            alert('Tạo lớp học thành công', window.location.reload());
+            alert('Tải lên dữ liệu thành công', window.location.reload());
         } catch (error) {
             alert(error);
         }
     };
     return (
-        <div className="modal fade" id="myModal">
+        <div className="modal fade" id="myModal3">
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header">
-                        <h4 className="modal-title">Tạo lớp học</h4>
+                        <h4 className="modal-title">Tải lên video bài giảng</h4>
                         <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
                     </div>
 
@@ -98,16 +71,16 @@ function Modal() {
                                 <input
                                     type="text"
                                     className="form-control"
-                                    placeholder="Tên lớp học"
+                                    placeholder="Tiêu đề video"
                                     aria-label="Username"
-                                    {...register('course_name', { require: true })}
+                                    {...register('video_name', { require: true })}
                                 />
                             </div>
 
                             <div className="input-group mb-3">
                                 <input
-                                    type="text"
-                                    {...register('discription', { require: true })}
+                                    type="file"
+                                    {...register('file', { require: true })}
                                     className="form-control"
                                     placeholder="Mô tả"
                                     aria-label="Username"
@@ -119,7 +92,7 @@ function Modal() {
                             <button type="button" className="btn btn-danger" data-bs-dismiss="modal">
                                 Close
                             </button>
-                            <input type="submit" value="Đăng ký" className="btn btn-primary" />
+                            <input type="submit" value="Tải lên" className="btn btn-primary" />
                         </div>
                     </form>
                 </div>
@@ -128,4 +101,4 @@ function Modal() {
     );
 }
 
-export default Modal;
+export default ModalVideo;

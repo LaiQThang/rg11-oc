@@ -4,13 +4,22 @@ import styles from './Room.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { useSocket } from '~/providers/Socket';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import File from './File';
+import ModalFile from './ModalFile';
+import ModalVideo from './ModalVideo';
 
 const cx = classNames.bind(styles);
 
-function Room() {
-    const student = false;
+function Room(props) {
+    const [course, setCourse] = useState([]);
+
+    const pathArr = window.location.pathname.split('/');
+
+    const lastPathName = pathArr[pathArr.length - 1];
+
+    console.log(lastPathName);
 
     const { socket } = useSocket();
 
@@ -18,10 +27,26 @@ function Room() {
 
     const data = JSON?.parse(localStorage?.getItem('data'));
 
+    useEffect(() => {
+        const fetchAPI = async () => {
+            const result = await fetch(`http://localhost:5000/courses?room_id=${lastPathName}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    return data[0];
+                });
+
+            setCourse(result);
+        };
+
+        fetchAPI();
+    }, []);
+
+    console.log(course);
+
     const handleRoomJoined = useCallback(
         ({ roomID }) => {
             // console.log('Room Joined', roomID);
-            navigate(`/source/room/${roomID}`);
+            navigate(`/source/room/class/${roomID}`);
         },
         [navigate],
     );
@@ -35,59 +60,33 @@ function Room() {
     }, [handleRoomJoined, socket]);
 
     const handleJoinRoom = () => {
-        socket.emit('join-room', { roomID: '1', emailID: data[0].username });
+        socket.emit('join-room', { roomID: course.room_id, emailID: data[0].full_name });
     };
+
+    const admin = data[0].power;
 
     return (
         <div className={cx('wrapper')}>
             <div className={cx('information')}>
                 <div className={cx('preview')}>
-                    <h1 className={cx('preview-title')}>Lập trình web</h1>
-                    <p className={cx('preview-content')}>
-                        Chào các bạn, để có cái nhìn tổng quan về ngành IT - Lập trình web chúng ta cùng học tại khóa
-                        này trước nhé.
-                    </p>
+                    <h1 className={cx('preview-title')}>{course?.course_name}</h1>
+                    <p className={cx('preview-content')}>{course?.discription}</p>
                 </div>
-                <div className={cx('detail')}>
-                    <h2 className={cx('detail-title')}>Bạn sẽ học được gì?</h2>
-                    <ul className={cx('detail-list')}>
-                        <li className={cx('detail-item')}>Các kiến thức cơ bản, nền móng của ngành IT</li>
-                        <li className={cx('detail-item')}>Các mô hình, kiến trúc cơ bản khi triển khai ứng dụng</li>
-                        <li className={cx('detail-item')}>Các khái niệm, thuật ngữ cốt lõi khi triển khai ứng dụng</li>
-                    </ul>
-                </div>
+
                 <div className={cx('file')}>
                     <h2 className={cx('file-title')}>Tài liệu học</h2>
                     <ul className={cx('file-list')}>
-                        <li className={cx('file-item')}>
-                            <FontAwesomeIcon icon={faCheck} className={cx('icon')} />
-                            <a href="/">Unit1</a>
-                        </li>
-                        <li className={cx('file-item')}>
-                            <FontAwesomeIcon icon={faCheck} className={cx('icon')} />
-                            <a href="/">Unit2</a>
-                        </li>
-                        <li className={cx('file-item')}>
-                            <FontAwesomeIcon icon={faCheck} className={cx('icon')} />
-                            <a href="/">Unit3</a>
-                        </li>
+                        {course.file?.map((value, index) => {
+                            return <File data={value} key={index} />;
+                        })}
                     </ul>
                 </div>
                 <div className={cx('video')}>
                     <h2 className={cx('video-title')}>Video bài giảng</h2>
                     <ul className={cx('video-list')}>
-                        <li className={cx('video-item')}>
-                            <FontAwesomeIcon icon={faCheck} className={cx('icon')} />
-                            <a href="/">Video buổi 1</a>
-                        </li>
-                        <li className={cx('video-item')}>
-                            <FontAwesomeIcon icon={faCheck} className={cx('icon')} />
-                            <a href="/">Video buổi 2</a>
-                        </li>
-                        <li className={cx('video-item')}>
-                            <FontAwesomeIcon icon={faCheck} className={cx('icon')} />
-                            <a href="/">Video buổi 3</a>
-                        </li>
+                        {course.video?.map((value, index) => {
+                            return <File data={value} key={index} />;
+                        })}
                     </ul>
                 </div>
             </div>
@@ -95,12 +94,28 @@ function Room() {
                 <button onClick={handleJoinRoom} className={cx('function-btn')}>
                     VÀO LỚP HỌC
                 </button>
-                {student ? (
+                {!admin ? (
                     <button className={cx('function-btn')}>NỘP BÀI</button>
                 ) : (
                     <>
-                        <button className={cx('function-btn')}>ĐĂNG TÀI LIỆU</button>
-                        <button className={cx('function-btn')}>ĐĂNG VIDEO BÀI GIẢNG</button>
+                        <button
+                            className={cx('function-btn')}
+                            type="button"
+                            data-bs-toggle="modal"
+                            data-bs-target="#myModal2"
+                        >
+                            ĐĂNG TÀI LIỆU
+                        </button>
+                        <ModalFile path={lastPathName} />
+                        <button
+                            className={cx('function-btn')}
+                            type="button"
+                            data-bs-toggle="modal"
+                            data-bs-target="#myModal3"
+                        >
+                            ĐĂNG VIDEO BÀI GIẢNG
+                        </button>
+                        <ModalVideo path={lastPathName} />
                     </>
                 )}
             </div>

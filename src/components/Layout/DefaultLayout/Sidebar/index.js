@@ -9,18 +9,26 @@ import Modal from '~/components/Modal';
 const cx = classNames.bind(styles);
 
 function Sidebar() {
+    const data = JSON.parse(localStorage.getItem('data'));
+
+    const admin = data[0].power;
     return (
         <div className={cx('wrapper')}>
             <div className={cx('side-bar')}>
-                <button
-                    className={cx('create-room', { class: true })}
-                    type="button"
-                    data-bs-toggle="modal"
-                    data-bs-target="#myModal"
-                >
-                    <FontAwesomeIcon icon={faPlus} />
-                </button>
-                <Modal />
+                {admin && (
+                    <>
+                        <button
+                            className={cx('create-room', { class: true })}
+                            type="button"
+                            data-bs-toggle="modal"
+                            data-bs-target="#myModal"
+                        >
+                            <FontAwesomeIcon icon={faPlus} />
+                        </button>
+                        <Modal />
+                    </>
+                )}
+
                 <NavLink className={(nav) => cx('action', { active: nav.isActive })} to="/">
                     <FontAwesomeIcon icon={faHome} />
                     <span className={cx('title')}>Home</span>
