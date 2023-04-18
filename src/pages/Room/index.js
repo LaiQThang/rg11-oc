@@ -19,8 +19,6 @@ function Room(props) {
 
     const lastPathName = pathArr[pathArr.length - 1];
 
-    console.log(lastPathName);
-
     const { socket } = useSocket();
 
     const navigate = useNavigate();
@@ -40,8 +38,6 @@ function Room(props) {
 
         fetchAPI();
     }, []);
-
-    console.log(course);
 
     const handleRoomJoined = useCallback(
         ({ roomID }) => {

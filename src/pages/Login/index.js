@@ -37,7 +37,7 @@ function Login() {
         <div className={cx('wrapper')} style={{ background: `url(${images.background})` }}>
             <div className={cx('login')}>
                 <img src={images.logo} alt="logo" className={cx('logo')} />
-                <h2 className={cx('title')}>Central Authentication Service</h2>
+                <h2 className={cx('title')}>Dịch vụ xác thực trung tâm</h2>
                 <div className={cx('body-login')}>
                     <label className={cx('label')}>Tên đăng nhập:</label>
                     <input className={cx('input')} type="text" onChange={(e) => setUser(e.target.value)} />

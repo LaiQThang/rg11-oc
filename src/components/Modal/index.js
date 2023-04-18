@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 function Modal() {
-    const [detail, setDetail] = useState({});
+    const [detail, setDetail] = useState(null);
     const {
         register,
         handleSubmit,
@@ -13,24 +13,21 @@ function Modal() {
 
     useEffect(() => {
         const fetchAPI = async () => {
-            const result = await fetch(`http://localhost:5000/users?${user[0].id}`)
+            const result = await fetch(`http://localhost:5000/users/${user[0].id}`)
                 .then((response) => response.json())
                 .then((data) => {
-                    return data[0];
+                    return data;
                 });
-
             setDetail(result);
         };
 
         fetchAPI();
     }, []);
 
-    console.log(detail);
-
     async function putJSON(data) {
         try {
             const response = await fetch(`http://localhost:5000/users/${user[0].id}`, {
-                method: 'PUT', // or 'PUT'
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -39,14 +36,14 @@ function Modal() {
 
             const result = await response.json();
         } catch (error) {
-            alert(error);
+            alert(123);
         }
     }
 
     async function postJSON(data) {
         try {
             const response = await fetch(`http://localhost:5000/courses`, {
-                method: 'POST', // or 'PUT'
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -54,8 +51,9 @@ function Modal() {
             });
 
             const result = await response.json();
+            console.log(result);
         } catch (error) {
-            alert(error);
+            console.log(error);
         }
     }
 

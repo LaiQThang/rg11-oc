@@ -1,4 +1,9 @@
 .wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.body {
     display: flex;
     width: 100%;
     flex-wrap: wrap;
@@ -7,11 +12,42 @@
 }
 
 .video {
+    position: relative;
     display: flex;
     align-items: center;
+    flex-direction: column;
     justify-content: center;
     width: 30%;
-    height: 200px;
+    height: 260px;
     margin: 20px;
-    background-color: #757575;
+}
+
+.video-name {
+    position: absolute;
+    bottom: -10px;
+}
+
+.render-video {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 230px !important;
+}
+
+.footer {
+    position: fixed;
+    width: 82%;
+    height: 66px;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.out-class {
+    background-color: rgb(234, 67, 53);
+    padding: 12px;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
 }

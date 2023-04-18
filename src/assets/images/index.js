@@ -1,5 +1,5 @@
 const images = {
-    background: require('~/assets/images/background_login.jpg'),
+    background: require('~/assets/images/elearning.jpg'),
     logo: require('~/assets/images/hou-logo.png'),
 };
 

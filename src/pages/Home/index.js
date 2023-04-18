@@ -15,7 +15,6 @@ function Home() {
     };
     const data = JSON?.parse(localStorage?.getItem('data'));
 
-    console.log(data);
     return (
         <div className={cx('wrapper')}>
             welcome to {data[0].username}

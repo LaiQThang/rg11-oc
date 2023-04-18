@@ -3,6 +3,10 @@ import React, { useEffect, useCallback, useState } from 'react';
 import { usePeer } from '~/providers/Peer';
 import { useSocket } from '~/providers/Socket';
 import styles from './Class.module.scss';
+import ReactPlayer from 'react-player';
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPhoneSlash } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
 
@@ -14,7 +18,13 @@ const Class = () => {
 
     const data = JSON?.parse(localStorage?.getItem('data'));
 
-    const firstUser = data[0].username;
+    const ref = window.location.href;
+
+    const num = ref.split('/');
+
+    const lastRef = num[num.length - 1];
+
+    const firstUser = data[0].full_name;
 
     const [user, setUser] = useState([firstUser]);
 
@@ -76,15 +86,28 @@ const Class = () => {
         socket.emit('call-user', { emailId: remoteEmailID, offer: localOffer });
     }, []);
 
+    // const handleDisconnect = useCallback(async (reason) => {
+    //     const { close } = reason;
+    //     if (close) {
+    //         console.log('Diss room');
+    //     }
+
+    //     const offer = await createOffer();
+
+    //     socket.emit('close', {  });
+    // }, []);
+
     useEffect(() => {
         socket.on('user-joined', handleNewUserJoined);
         socket.on('incomming-call', handleInCommingCall);
         socket.on('call-accepted', handleCallAccepted);
+        // socket.on('disconnect', handleDisconnect);
 
         return () => {
             socket.off('user-joined', handleNewUserJoined);
             socket.off('incomming-call', handleInCommingCall);
             socket.off('call-accepted', handleCallAccepted);
+            // socket.off('disconnect', handleDisconnect);
         };
     }, [handleCallAccepted, handleInCommingCall, handleNewUserJoined, socket]);
 
@@ -104,18 +127,32 @@ const Class = () => {
 
     return (
         <div className={cx('wrapper')}>
-            {user?.map((value, index) => {
-                return (
-                    <div className={cx('video')}>
-                        <h2 key={index}>{value}</h2>
-                    </div>
-                );
-            })}
-            {/* <ReactPlayer url={myStream} playing />  */}
+            <div className={cx('body')}>
+                {user?.map((value, index) => {
+                    return (
+                        <div key={index} className={cx('video')}>
+                            <ReactPlayer url={myStream} playing className={cx('render-video')} />
+                            <h2 key={index} className={cx('video-name')}>
+                                {value}
+                            </h2>
+                        </div>
+                    );
+                })}
+            </div>
             {/* {remoteStream.map((value, index) => {
                 console.log(value);
                 return <h2>{value}</h2>;
             })} */}
+            <div className={cx('footer')}>
+                <Link
+                    to={{
+                        pathname: `/source/room/${lastRef}`,
+                    }}
+                    className={cx('out-class')}
+                >
+                    <FontAwesomeIcon icon={faPhoneSlash} />
+                </Link>
+            </div>
         </div>
     );
 };
