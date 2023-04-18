@@ -1,14 +1,13 @@
 import classNames from 'classnames/bind';
 
 import styles from './Room.module.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { useSocket } from '~/providers/Socket';
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import File from './File';
 import ModalFile from './ModalFile';
 import ModalVideo from './ModalVideo';
+import ModalAdd from './ModalAdd';
 
 const cx = classNames.bind(styles);
 
@@ -112,6 +111,15 @@ function Room(props) {
                             ĐĂNG VIDEO BÀI GIẢNG
                         </button>
                         <ModalVideo path={lastPathName} />
+                        <button
+                            className={cx('function-btn')}
+                            type="button"
+                            data-bs-toggle="modal"
+                            data-bs-target="#modalAdd"
+                        >
+                            THÊM HỌC VIÊN VÀO LỚP
+                        </button>
+                        <ModalAdd />
                     </>
                 )}
             </div>
